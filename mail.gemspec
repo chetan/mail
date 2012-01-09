@@ -10,7 +10,6 @@ Gem::Specification.new do |s|
   s.summary     = "Mail provides a nice Ruby DSL for making, sending and reading emails."
 
   s.platform = Gem::Platform::RUBY
-  s.has_rdoc = true
   s.extra_rdoc_files = ["README.mkd", "CHANGELOG.rdoc", "TODO.rdoc"]
 
   s.add_dependency('mime-types', "~> 1.16")
