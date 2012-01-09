@@ -1834,6 +1834,17 @@ module Mail
       return @mark_for_delete
     end
 
+    # Returns the IMAP Message ID. This is the ID as assigned by the IMAP server
+    # for operating on the message server-side.
+    def imap_message_id
+      @imap_message_id
+    end
+
+    # Sets the IMAP Message ID
+    def imap_message_id=( val )
+      @imap_message_id = val
+    end
+
   private
 
     #  2.1. General Description

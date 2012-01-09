@@ -34,7 +34,7 @@ module Mail
   #
   class IMAP < Retriever
     require 'net/imap'
-    
+
     def initialize(values)
       self.settings = { :address              => "localhost",
                         :port                 => 143,
@@ -73,6 +73,7 @@ module Mail
           message_ids.each do |message_id|
             fetchdata = imap.uid_fetch(message_id, ['RFC822'])[0]
             new_message = Mail.new(fetchdata.attr['RFC822'])
+            new_message.imap_message_id = message_id
             new_message.mark_for_delete = true if options[:delete_after_find]
             if block.arity == 3
               yield new_message, imap, message_id
@@ -86,7 +87,9 @@ module Mail
           emails = []
           message_ids.each do |message_id|
             fetchdata = imap.uid_fetch(message_id, ['RFC822'])[0]
-            emails << Mail.new(fetchdata.attr['RFC822'])
+            new_message = Mail.new(fetchdata.attr['RFC822'])
+            new_message.imap_message_id = message_id
+            emails << new_message
             imap.uid_store(message_id, "+FLAGS", [Net::IMAP::DELETED]) if options[:delete_after_find]
           end
           imap.expunge if options[:delete_after_find]
